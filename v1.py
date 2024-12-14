@@ -85,7 +85,7 @@ urls = [
     'https://ottr.opentext.com/test_run/execute/14452840?next=true',
     'https://ottr.opentext.com/test_run/execute/14267545'
 ]
-names = ['Tejas', 'Jahnavi']
+names = ['Tokyo', 'Singapore']
 username = os.getenv('OTTR_USERNAME')
 password = os.getenv('OTTR_PASS')
 a = CompareFails(urls, names)
