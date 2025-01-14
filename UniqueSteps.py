@@ -22,35 +22,46 @@ class UniqueSteps:
         self.sequences = []
         self.driver.implicitly_wait(10)
         self.names = names
+        self.passed = []
+        self.failed = []
+        self.na = []
+        self.ip = []
+        self.ne = []
 
     def login(self, username, password):
         self.driver.find_element(By.CSS_SELECTOR, '#user_login').send_keys(username)
         self.driver.find_element(By.CSS_SELECTOR, '#user_password').send_keys(password)
         self.driver.find_element(By.XPATH, "//input[@type='submit']").click()
 
-    def get_sequences(self, id, type):
-        temp = []
-        cond = ""
-
-        if type == 'f':
-            cond = 'title="Failed"'
-        elif type == 'p':
-            cond = 'title="Passed"'
-        elif type == 'ip':
-            cond = 'title="In'
-        elif type == 'na':
-            cond = 'Applicable"'
-        else:
-            cond = 'Executed"'
-        if id != 0:
-            self.driver.get(self.urls[id])
+    def get_sequences(self, idx):
+        temp_pass = []
+        temp_fail = []
+        temp_na = []
+        temp_ne = []
+        temp_ip = []
+        index = 1
+        if idx != 0:
+            self.driver.get(self.urls[idx])
         t.sleep(3)
-        obj = self.driver.find_elements(By.XPATH, "//div[contains(@id,'outer_step')]")
+        obj = self.driver.find_elements(By.XPATH, "//div[contains(@id, 'outer_step')]")
         for i in obj:
-            t1 = i.get_attribute('innerHTML').split()
-            if t1[13] == cond or t1[14] == cond:
-                temp.append(int(t1[1][9:-1]))
-        self.sequences.append(temp)
+            temp = i.find_element(By.XPATH, ".//img").get_attribute("title")
+            if temp == 'Passed':
+                temp_pass.append(index)
+            elif temp == 'Failed':
+                temp_fail.append(index)
+            elif temp == 'Not Applicable':
+                temp_na.append(index)
+            elif temp == 'Not Executed':
+                temp_ne.append(index)
+            elif temp == 'In Progress':
+                temp_ip.append(index)
+            index += 1
+        self.passed.append(temp_pass)
+        self.failed.append(temp_fail)
+        self.na.append(temp_na)
+        self.ne.append(temp_ne)
+        self.ip.append(temp_ip)
 
     def print_sequences(self, index):
         print(self.sequences[index])
@@ -82,26 +93,3 @@ class UniqueSteps:
 
     def close_driver(self):
         self.driver.close()
-
-# urls = [
-#     'https://ottr.opentext.com/test_run/execute/14267484',
-#     'https://ottr.opentext.com/test_run/execute/14267538'
-# ]
-# names = ['London', 'Singapore']
-# username = os.getenv('OTTR_USERNAME')
-# password = os.getenv('OTTR_PASS')
-# a = CompareFails(urls, names)
-# a.login(username, password)
-#
-# a.keep_awake(5)
-# a.get_sequences(0,'p')
-# # a.get_sequences(1, 'p')
-# a.print_sequences(0)
-# a.get_sequences(0, 'f')
-# a.print_sequences(1)
-# # a.print_sequences(1)
-# # a.tally_sequences(0, 1)
-#
-#
-# # a.keep_awake(10)
-# a.close_driver()

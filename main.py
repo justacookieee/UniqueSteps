@@ -30,10 +30,20 @@ def get_sequences(*args):
     password = os.getenv('OTTR_PASS')
     a.login(username, password)
     temp = sequence_type.get()
-    a.get_sequences(0, temp)
-    a.get_sequences(1, temp)
+    a.get_sequences(0)
+    a.get_sequences(1)
     a.close_driver()
-    print(a.sequences)
+    print('Passed:')
+    print(a.passed)
+    print('Failed:')
+    print(a.failed)
+    print('Not Applicable:')
+    print(a.na)
+    print("Not Executed")
+    print(a.ne)
+    print("In Progress")
+    print(a.ip)
+
 ### /Functions
 
 ### Logic
