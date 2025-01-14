@@ -48,7 +48,7 @@ Before using the tool, ensure you have:
 1. Modify v1.py file according to your requirements
 2. Run v1.py from the terminal.
    ```bash
-   python v1.py
+   python UniqueSteps.py
    ```
 
 ---

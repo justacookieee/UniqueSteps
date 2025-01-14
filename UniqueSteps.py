@@ -14,7 +14,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 # load_dotenv()
-class CompareFails:
+class UniqueSteps:
     def __init__(self, urls, names):
         self.driver = webdriver.Chrome()
         self.driver.get(urls[0])

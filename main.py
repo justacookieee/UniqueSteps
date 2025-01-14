@@ -1,7 +1,7 @@
 import os
 from tkinter import *
 from tkinter import ttk
-from v1 import CompareFails
+from UniqueSteps import UniqueSteps
 from dotenv import load_dotenv
 
 ### Setup
@@ -25,7 +25,7 @@ def get_sequences(*args):
     load_dotenv()
     urls = [url1.get(), url2.get()]
     names = [name1.get(), name2.get()]
-    a = CompareFails(urls, names)
+    a = UniqueSteps(urls, names)
     username = os.getenv('OTTR_USERNAME')
     password = os.getenv('OTTR_PASS')
     a.login(username, password)
